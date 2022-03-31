@@ -1,0 +1,34 @@
+{
+  "name": "vendor/package",
+  "description": "Repository template for Composer packages",
+  "keywords": ["package"],
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/vendor/package",
+  "authors": [
+    {
+      "name": "...",
+      "email": "...",
+      "role": "developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": ">=8.5.25"
+  },
+  "autoload": {
+    "psr-4": {
+      "Vendor\\Package\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Vendor\\Package\\": "tests/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true
+  },
+  "extra": {}
+}

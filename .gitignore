@@ -1,0 +1,19 @@
+# IDE project files
+/.idea/
+/.buildpath/
+/.project/
+/.settings/
+/nbproject/
+/build/
+# Composer vendor directory
+/vendor/
+# Windows thumbnail cache
+Thumbs.db
+# Mac files
+.DS_Store
+# Temp files
+*.lock
+*.cache
+*.tmp
+*.log
+*.phar

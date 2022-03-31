@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" backupGlobals="true" colors="true" stopOnError="true">
+    <testsuites>
+        <testsuite name="default">
+            <directory>tests</directory>
+            <!--
+            <php>
+                <server name="..." value="..."/>
+                <env name="..." value="..."/>
+                <get name="..." value="..."/>
+                <post name="..." value="..."/>
+                <cookie name="..." value="..."/>
+            </php>
+            -->
+        </testsuite>
+    </testsuites>
+</phpunit>
