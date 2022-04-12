@@ -1,9 +1,10 @@
-# dummy-package
+# ensostudio/comparator
 
-Repository template for Composer packages.
+Package to comparing any values.
 
 # Installation
 
+Via Composer:
 ```bash
-composer require vendor/package
+composer require ensostudio/comparator
 ```

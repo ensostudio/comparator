@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php" backupGlobals="true" colors="true" stopOnError="true">
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.5/phpunit.xsd"
+        bootstrap="vendor/autoload.php"
+        colors="true"
+        stopOnError="true"
+>
     <testsuites>
-        <testsuite name="default">
+        <testsuite name="comparator">
             <directory>tests</directory>
-            <!--
-            <php>
-                <server name="..." value="..."/>
-                <env name="..." value="..."/>
-                <get name="..." value="..."/>
-                <post name="..." value="..."/>
-                <cookie name="..." value="..."/>
-            </php>
-            -->
         </testsuite>
     </testsuites>
 </phpunit>
