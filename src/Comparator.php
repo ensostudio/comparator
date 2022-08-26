@@ -130,7 +130,7 @@ class Comparator
      */
     public function compare($value, $value2): bool
     {
-        if ($value === $value2 || (!$this->hasFlag(self::STRICT) && $value == $value2)) {
+        if ($value === $value2) {
             return true;
         }
 
@@ -139,6 +139,16 @@ class Comparator
         if ($this->hasFlag(self::STRICT) && $type !== $type2) {
             return false;
         }
+        if (
+            !$this->hasFlag(self::STRICT)
+            && $type === $type2
+            && $type !== 'array'
+            && $value == $value2
+        ) {
+            return true;
+        }
+        // TODO: fix non-strict comparation of non-compatible types (object with not object/string)
+
         if ($type === 'double' || $type2 === 'double') {
             $type = 'float';
         } elseif ($type === 'string' || $type2 === 'string') {
