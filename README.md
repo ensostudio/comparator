@@ -55,6 +55,8 @@ class Comparator
     public function setFlags(int $flags);
     public function getFlags(): int;
     public function hasFlag(int $flag): bool;
+    public function getType(mixed $value): string;
+    public function canCompare(string $type, string $type2): bool;
     public function compare(mixed $value, mixed $value): bool;
 }
 ~~~
