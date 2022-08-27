@@ -1,6 +1,6 @@
 {
   "name": "ensostudio/comparator",
-  "description": "The flexible comparation of any values",
+  "description": "The flexible comparation of any PHP variables",
   "keywords": ["compare", "comparation", "comparator", "php"],
   "license": "BSD-3-Clause",
   "homepage": "https://github.com/ensostudio/comparator",
