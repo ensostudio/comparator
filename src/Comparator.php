@@ -5,25 +5,6 @@ namespace EnsoStudio\Comparator;
 use Closure;
 use ReflectionFunction;
 
-use function abs;
-use function array_keys;
-use function count;
-use function ksort;
-use function get_class;
-use function get_object_vars;
-use function get_resource_type;
-use function gettype;
-use function in_array;
-use function is_nan;
-use function max;
-use function method_exists;
-use function min;
-use function strcasecmp;
-use function strcmp;
-use function stream_get_meta_data;
-
-use const PHP_FLOAT_EPSILON;
-
 /**
  * The flexible comparation.
  */
@@ -75,6 +56,17 @@ class Comparator
     public const EQUAL_STREAM = 256;
 
     /**
+     * The alternative names of PHP types returning from `gettype()`.
+     */
+    protected const ALT_TYPES = [
+        'NULL' => 'null',
+        'boolean' => 'bool',
+        'integer' => 'int',
+        'double' => 'float',
+        'resource (closed)' => 'resource',
+    ];
+
+    /**
      * @var int The flags defines comparison behavior.
      */
     private $flags = 0;
@@ -122,6 +114,37 @@ class Comparator
     }
 
     /**
+     * Gets the PHP type of a variable.
+     *
+     * @param mixed $value the variable being type checked
+     * @return string the type name
+     */
+    public function getType($value): string
+    {
+        $type = gettype($value);
+
+        return static::ALT_TYPES[$type] ?? $type;
+    }
+
+    /**
+     * Checks whether PHP types are comparable (non-strict comparison).
+     *
+     * @param string $type the first type name
+     * @param string $type2 the second type name
+     */
+    public function canCompare(string $type, string $type2): bool
+    {
+        if (
+            ($type === 'object' && in_array($type2, ['int', 'float'], true))
+            || ($type2 === 'object' && in_array($type, ['int', 'float'], true))
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Compares two values.
      *
      * @param mixed $value the first value to compare
@@ -132,31 +155,20 @@ class Comparator
     {
         if ($value === $value2) {
             return true;
-        }
-
-        $type = gettype($value);
-        $type2 = gettype($value2);
-        if ($this->hasFlag(self::STRICT) && $type !== $type2) {
+        } elseif ($this->hasFlag(self::STRICT)) {
             return false;
         }
-        if (
-            !$this->hasFlag(self::STRICT)
-            && $type === $type2
-            && $type !== 'array'
-            && $value == $value2
-        ) {
+
+        $type = $this->getType($value);
+        $type2 = $this->gettype($value2);
+
+        if ($this->canCompare($type, $type2) && $value == $value2) {
             return true;
         }
-        // TODO: fix non-strict comparation of non-compatible types (object with not object/string)
 
-        if ($type === 'double' || $type2 === 'double') {
-            $type = 'float';
-        } elseif ($type === 'string' || $type2 === 'string') {
-            $type = 'string';
-        }
         if (
-            ($type === $type2 && in_array($type, ['array', 'object', 'resource'], true))
-            || in_array($type, ['float', 'string'], true)
+            $type === $type2
+            && in_array($type, ['array', 'object', 'resource', 'float', 'string'], true)
         ) {
             return $this->{'compare' . $type . 's'}($value, $value2);
         }
